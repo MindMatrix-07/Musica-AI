@@ -2,12 +2,13 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import multer from "multer";
+import os from "os";
 import { GoogleGenAI } from "@google/genai";
 import { OpenAI } from "openai";
-import { createServer as createViteServer } from "vite";
 
 // Initialize multer for handling audio file uploads
-const uploadDir = path.join(process.cwd(), "tmp_uploads");
+// Use os.tmpdir() to ensure write permission in serverless environments like Vercel
+const uploadDir = path.join(os.tmpdir(), "tmp_uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -190,12 +191,10 @@ async function streamGenerate(
   throw new Error("No models available for generation");
 }
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+const app = express();
 
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
   // Metadata check configuration
   app.get("/api/config", (req, res) => {
@@ -610,8 +609,14 @@ async function startServer() {
     }
   });
 
+export { app };
+
+async function startServer() {
+  const PORT = 3000;
+
   // Serve static assets in production or mount Vite middleware in development
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
@@ -630,6 +635,8 @@ async function startServer() {
   });
 }
 
-startServer().catch((e) => {
-  console.error("Server startup crash:", e);
-});
+if (!process.env.VERCEL) {
+  startServer().catch((e) => {
+    console.error("Server startup crash:", e);
+  });
+}
