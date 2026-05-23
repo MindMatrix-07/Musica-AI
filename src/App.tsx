@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AppHeader } from "@/components/AppHeader";
-import { DashboardPage } from "@/components/DashboardPage";
-import { SettingsPage } from "@/components/SettingsPage";
+import { AppHeader } from "@/components/app-header";
+import { DashboardPage } from "@/components/dashboard-page";
+import { SettingsPage } from "@/components/settings-page";
 import { setServerKeyAvailable } from "@/lib/ai-settings";
 
 function AnimatedBackground() {

@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ConfigPanel } from "@/components/ConfigPanel";
-import { CurationLiveFeed } from "@/components/CurationLiveFeed";
-import { LyricsPanel } from "@/components/LyricsPanel";
-import { MusicPlayerHero } from "@/components/MusicPlayerHero";
-import { PromptBox } from "@/components/PromptBox";
+import { ConfigPanel } from "@/components/config-panel";
+import { CurationLiveFeed } from "@/components/curation-live-feed";
+import { LyricsPanel } from "@/components/lyrics-panel";
+import { MusicPlayerHero } from "@/components/music-player-hero";
+import { PromptBox } from "@/components/prompt-box";
 import {
   curateAudioStream,
   type CurateModel,
