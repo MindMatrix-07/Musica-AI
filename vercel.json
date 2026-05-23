@@ -2,7 +2,8 @@
   "version": 2,
   "functions": {
     "api/index.ts": {
-      "includeFiles": "grounding/**"
+      "includeFiles": "grounding/**",
+      "maxDuration": 60
     }
   },
   "routes": [
