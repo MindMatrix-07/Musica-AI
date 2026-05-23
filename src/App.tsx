@@ -1,11 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatedBackground } from "@/components/music-background";
 import { AppHeader } from "@/components/AppHeader";
 import { DashboardPage } from "@/components/DashboardPage";
 import { SettingsPage } from "@/components/SettingsPage";
 import { setServerKeyAvailable } from "@/lib/ai-settings";
+
+function AnimatedBackground() {
+  return (
+    <div className="ambient-bg" aria-hidden>
+      <div className="ambient-blob ambient-blob--violet" />
+      <div className="ambient-blob ambient-blob--purple" />
+      <div className="ambient-blob ambient-blob--rose" />
+      <div className="ambient-blob ambient-blob--orange" />
+      <div className="ambient-blob ambient-blob--red" />
+      <div className="ambient-noise" />
+    </div>
+  );
+}
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<"player" | "settings">("player");
