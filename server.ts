@@ -250,6 +250,9 @@ async function startServer() {
 
     const sendEvent = (event: any) => {
       res.write(`data: ${JSON.stringify(event)}\n\n`);
+      if (typeof (res as any).flush === "function") {
+        (res as any).flush();
+      }
     };
 
     if (provider === "openai") {
@@ -430,6 +433,7 @@ async function startServer() {
         const state = String(fileInfo.state);
         if (state === "ACTIVE") {
           active = true;
+          uploadedFile = fileInfo;
           break;
         }
         if (state === "FAILED") {
@@ -451,10 +455,16 @@ async function startServer() {
         message: "Audio ready — streaming curation",
       });
 
+      console.log("Gemini active file details:", {
+        uri: uploadedFile?.uri,
+        mimeType: uploadedFile?.mimeType || file.mimetype,
+        name: uploadedFile?.name,
+      });
+
       const filePart = {
         fileData: {
           fileUri: uploadedFile.uri,
-          mimeType: uploadedFile.mimeType,
+          mimeType: uploadedFile.mimeType || file.mimetype,
         },
       };
 
