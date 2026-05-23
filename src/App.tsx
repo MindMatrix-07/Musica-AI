@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatedBackground } from "@/components/animated-background";
+import { AnimatedBackground } from "@/components/music-background";
 import { AppHeader } from "@/components/AppHeader";
 import { DashboardPage } from "@/components/DashboardPage";
 import { SettingsPage } from "@/components/SettingsPage";
